@@ -9,7 +9,7 @@
     <Company>xstof</Company>
     <PackageDescription>.NET Core testing/debugging middleware which emits an Azure EventGrid message for every request and response the middleware sees.</PackageDescription>
     <PackageTags>EventGrid;Middleware;Testing;Debugging</PackageTags>
-    <RepositoryUrl>https://github.com/xstof/xstof-requestgrid<RepositoryUrl>
+    <RepositoryUrl>https://github.com/xstof/xstof-requestgrid</RepositoryUrl>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

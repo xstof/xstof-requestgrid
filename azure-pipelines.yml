@@ -1,0 +1,35 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+variables:
+  buildConfiguration: 'Release'
+
+jobs:
+- job: build
+  displayName: build middleware and sample
+  pool: 
+    vmImage: 'ubuntu-latest'
+  steps:
+  - script: dotnet build -c $(buildConfiguration) ./Xstof.RequestGrid/Xstof.RequestGrid.csproj
+    displayName: 'build Xstof.RequestGrid.csproj in config: $(buildConfiguration)'
+  - script: dotnet build -c $(buildConfiguration) ./Xstof.RequestGrid.Sample/Xstof.RequestGrid.Sample.csproj
+    displayName: 'build Xstof.RequestGrid.Sample.csproj in config: $(buildConfiguration)'
+  - task: CopyFiles@2
+    displayName: copy nuget package to artifact staging dir
+    inputs:
+      SourceFolder: './Xstof.RequestGrid/bin/$(buildConfiguration)/'
+      Contents: '*.nupkg'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/nuget'
+  - task: NuGetCommand@2
+    displayName: publish nuget package to internal azure devops package feed
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '/f73970d7-2843-490a-821e-b46cc6691cf7'
+      allowPackageConflicts: true
