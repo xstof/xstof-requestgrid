@@ -25,10 +25,10 @@ jobs:
       SourceFolder: './XstofRequestGrid/bin/$(buildConfiguration)/'
       Contents: '*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)/nuget'
-  - 
-- task: NuGetCommand@2
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: '/c8ba7810-cb08-4d14-a894-0f085d7f4517'
+  - task: NuGetCommand@2
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '/f73970d7-2843-490a-821e-b46cc6691cf7'
+      allowPackageConflicts: true
