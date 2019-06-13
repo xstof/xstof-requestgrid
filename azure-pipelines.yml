@@ -19,3 +19,16 @@ jobs:
     displayName: 'build Xstof.RequestGrid.csproj in config: $(buildConfiguration)'
   - script: dotnet build -c $(buildConfiguration) ./Xstof.RequestGrid.Sample/Xstof.RequestGrid.Sample.csproj
     displayName: 'build Xstof.RequestGrid.Sample.csproj in config: $(buildConfiguration)'
+  - task: CopyFiles@2
+    displayName: copy nuget package to artifact staging dir
+    inputs:
+      SourceFolder: './XstofRequestGrid/bin/$(buildConfiguration)/'
+      Contents: '*.nupkg'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/nuget'
+  - 
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '/c8ba7810-cb08-4d14-a894-0f085d7f4517'
