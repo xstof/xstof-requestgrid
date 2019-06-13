@@ -11,7 +11,7 @@ variables:
 
 jobs:
 - job: build
-  displayname: build middleware and sample
+  displayName: build middleware and sample
   pool: 
     vmImage: 'ubuntu-latest'
   steps:
