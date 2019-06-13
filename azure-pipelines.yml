@@ -15,7 +15,7 @@ jobs:
   pool: 
     vmImage: 'ubuntu-latest'
   steps:
-  - script: dotnet build ./Xstof.RequestGrid/Xstof.RequestGrid.csproj $(buildConfiguration)
+  - script: dotnet build -c $(buildConfiguration) ./Xstof.RequestGrid/Xstof.RequestGrid.csproj
     displayName: 'build Xstof.RequestGrid.csproj in config: $(buildConfiguration)'
-  - script: dotnet build ./Xstof.RequestGrid.Sample/Xstof.RequestGrid.Sample.csproj $(buildConfiguration)
+  - script: dotnet build -c $(buildConfiguration) ./Xstof.RequestGrid.Sample/Xstof.RequestGrid.Sample.csproj
     displayName: 'build Xstof.RequestGrid.Sample.csproj in config: $(buildConfiguration)'
