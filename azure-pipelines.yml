@@ -22,10 +22,11 @@ jobs:
   - task: CopyFiles@2
     displayName: copy nuget package to artifact staging dir
     inputs:
-      SourceFolder: './XstofRequestGrid/bin/$(buildConfiguration)/'
+      SourceFolder: './Xstof.RequestGrid/bin/$(buildConfiguration)/'
       Contents: '*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)/nuget'
   - task: NuGetCommand@2
+    displayName: publish nuget package to internal azure devops package feed
     inputs:
       command: 'push'
       packagesToPush: '$(Build.ArtifactStagingDirectory)/nuget/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
